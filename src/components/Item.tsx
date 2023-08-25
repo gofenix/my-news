@@ -37,7 +37,7 @@ export default function Item(props: NewItemProp) {
         as={Button}
         onClick={() => {
           const addCnt = count + 1;
-          addCountById(item.id, addCnt);
+          addCountById(item.id || 0, addCnt);
           setCount(addCnt);
         }}
         variant={"outline"}
