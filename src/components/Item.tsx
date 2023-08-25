@@ -12,9 +12,10 @@ import {
   Text,
   Wrap,
 } from "@chakra-ui/react";
-import { use, useState } from "react";
+import { useState } from "react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { NewItem } from "@/data/data";
+import { addCountById } from "@/data/supabase";
 
 type NewItemProp = {
   item: NewItem;
@@ -22,7 +23,7 @@ type NewItemProp = {
 
 export default function Item(props: NewItemProp) {
   const { item } = props;
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(item.upCount);
   return (
     <Stack direction={"row"} spacing={"3"} align={"center"}>
       <Stack
@@ -36,6 +37,7 @@ export default function Item(props: NewItemProp) {
         as={Button}
         onClick={() => {
           const addCnt = count + 1;
+          addCountById(item.id, addCnt);
           setCount(addCnt);
         }}
         variant={"outline"}

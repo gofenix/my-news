@@ -5,16 +5,26 @@ import ClickMe from "@/components/ClickMe";
 import Simple from "@/components/Sub";
 import Nav from "@/components/Nav";
 import Item from "@/components/Item";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { NewItem } from "@/data/data";
+import { createClient } from "@supabase/supabase-js";
+import { InferGetServerSidePropsType } from "next";
+import { addItem, getAll } from "@/data/supabase";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [data, setData] = useState([] as NewItem[]);
 
-  const handleClick = (item: NewItem) => {
-    setData(data.concat([item]));
+  useEffect(() => {
+    getAll().then((res) => {
+      setData(res);
+    });
+  }, []);
+
+  const handleClick = async (item: NewItem) => {
+    const added = await addItem(item);
+    setData(data.concat([added]));
   };
 
   return (
@@ -27,7 +37,7 @@ export default function Home() {
           {data.map((x, index) => {
             return (
               <Box key={index}>
-                <Item item={x}  />
+                <Item item={x} />
                 <Divider m={3} />
               </Box>
             );

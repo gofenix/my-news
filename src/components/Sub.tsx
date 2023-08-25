@@ -97,9 +97,9 @@ export default function Simple(props: Simple) {
               date: "2023-08-18",
             };
 
-            props.handleClick(item);
+            await props.handleClick(item);
             setState("success");
-            await delay(1000);
+            // await delay(1000);
             setState("initial");
           }
         }}
