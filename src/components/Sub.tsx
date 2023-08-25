@@ -180,6 +180,7 @@ export default function Simple(props: Simple) {
                   url: url,
                   author: "fenix",
                   date: "2023-07-20",
+                  upCount: 0
                 };
 
                 props.handleClick(item);
