@@ -1,5 +1,5 @@
 export type NewItem = {
-    id: number,
+    id?: number,
     title: string;
     url: string;
     author: string;

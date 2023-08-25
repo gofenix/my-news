@@ -95,6 +95,7 @@ export default function Simple(props: Simple) {
               url: url,
               author: "zhuzhenfeng.code",
               date: "2023-08-18",
+              upCount: 0,
             };
 
             await props.handleClick(item);
