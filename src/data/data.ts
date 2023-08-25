@@ -4,7 +4,7 @@ export type NewItem = {
     url: string;
     author: string;
     date: string;
-    upCount: number;
+    upCount?: number;
 };
 
 

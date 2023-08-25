@@ -24,7 +24,7 @@ export default function Home() {
 
   const handleClick = async (item: NewItem) => {
     const added = await addItem(item);
-    setData(data.concat([added]));
+    setData([added].concat(data));
   };
 
   return (

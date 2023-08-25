@@ -23,7 +23,7 @@ type NewItemProp = {
 
 export default function Item(props: NewItemProp) {
   const { item } = props;
-  const [count, setCount] = useState(item.upCount);
+  const [count, setCount] = useState(item.upCount || 0);
   return (
     <Stack direction={"row"} spacing={"3"} align={"center"}>
       <Stack

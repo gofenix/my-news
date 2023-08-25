@@ -10,6 +10,7 @@ export async function getAll(): Promise<NewItem[]> {
     let { data } = await supabase
         .from('news')
         .select('*')
+        .order("id", {ascending: false})
 
     const news: NewItem[] | undefined = data?.map(item => {
         return {
