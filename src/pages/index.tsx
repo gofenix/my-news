@@ -1,6 +1,14 @@
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
-import { Box, Center, Divider, Flex, Stack } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Divider,
+  Fade,
+  Flex,
+  SlideFade,
+  Stack,
+} from '@chakra-ui/react';
 import ClickMe from '@/components/ClickMe';
 import Simple from '@/components/Sub';
 import Nav from '@/components/Nav';
@@ -42,10 +50,12 @@ export default function Home() {
           <Box m={5}></Box>
           {data.map((x, index) => {
             return (
-              <Box key={index}>
-                <Item item={x} handleUp={handleUp} />
-                <Divider m={3} maxWidth={'90%'} />
-              </Box>
+              <Fade in>
+                <Box key={index}>
+                  <Item item={x} handleUp={handleUp} />
+                  <Divider m={3} maxWidth={'90%'} />
+                </Box>
+              </Fade>
             );
           })}
         </Stack>

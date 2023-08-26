@@ -1,5 +1,12 @@
 import { InfoIcon } from '@chakra-ui/icons';
-import { Icon, Stack, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Collapse,
+  Icon,
+  IconButton,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import { useCompletion } from 'ai/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -12,6 +19,7 @@ export default function Digest(props: DigestProps) {
   const { url } = props;
 
   const [content, setContent] = useState('');
+  const [open, setOpen] = useState(false);
 
   const {
     completion,
@@ -41,7 +49,13 @@ export default function Digest(props: DigestProps) {
       align={'baseline'}
       maxWidth={window.innerWidth * 0.55}
     >
-      <Text noOfLines={[1, 2, 3]}>{content}</Text>
+      {content == '' ? (
+        <></>
+      ) : (
+        <Collapse in={open} animateOpacity>
+          <Text noOfLines={[1, 2, 3]}>{content}</Text>
+        </Collapse>
+      )}
     </Stack>
   );
 }
