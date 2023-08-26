@@ -1,25 +1,17 @@
-import Image from 'next/image';
-import { Inter } from 'next/font/google';
 import {
   Box,
   Center,
   Divider,
   Fade,
-  Flex,
-  SlideFade,
   Stack,
 } from '@chakra-ui/react';
-import ClickMe from '@/components/ClickMe';
 import Simple from '@/components/Sub';
 import Nav from '@/components/Nav';
 import Item from '@/components/Item';
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NewItem } from '@/data/data';
-import { createClient } from '@supabase/supabase-js';
-import { InferGetServerSidePropsType } from 'next';
-import { addCountById, addItem, getAll } from '@/data/supabase';
+import { addItem, getAll } from '@/data/supabase';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const [data, setData] = useState([] as NewItem[]);
@@ -50,8 +42,8 @@ export default function Home() {
           <Box m={5}></Box>
           {data.map((x, index) => {
             return (
-              <Fade in>
-                <Box key={index}>
+              <Fade in key={index}>
+                <Box >
                   <Item item={x} handleUp={handleUp} />
                   <Divider m={3} maxWidth={'90%'} />
                 </Box>
