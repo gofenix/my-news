@@ -15,9 +15,9 @@ import {
   useColorMode,
   Center,
   Icon,
-} from "@chakra-ui/react";
-import { CalendarIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+} from '@chakra-ui/react';
+import { CalendarIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 
 interface Props {
   children: React.ReactNode;
@@ -31,12 +31,12 @@ const NavLink = (props: Props) => {
       as="a"
       px={2}
       py={1}
-      rounded={"md"}
+      rounded={'md'}
       _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.700"),
+        textDecoration: 'none',
+        bg: useColorModeValue('gray.200', 'gray.700'),
       }}
-      href={"#"}
+      href={'#'}
     >
       {children}
     </Box>
@@ -47,56 +47,55 @@ export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [user, setUser] = useState("zhuzhenfeng");
+  const [user, setUser] = useState('zhuzhenfeng');
 
   return (
     <>
       <Box
-        bg={useColorModeValue("gray.100", "gray.900")}
-        bgImage={"bg.svg"}
+        bg={useColorModeValue('gray.100', 'gray.900')}
+        bgImage={'bg.svg'}
         px={4}
       >
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Box>
             <Icon as={CalendarIcon} boxSize={6}></Icon>
           </Box>
 
-          <Flex alignItems={"center"}>
-            <Stack direction={"row"} spacing={7}>
+          <Flex alignItems={'center'}>
+            <Stack direction={'row'} spacing={7}>
               <Button
                 onClick={toggleColorMode}
-                variant={"link"}
+                variant={'link'}
                 _hover={{
-                  transform: "translateY(-2px)",
-                  boxShadow: "lg",
+                  transform: 'translateY(-2px)',
+                  boxShadow: 'lg',
                 }}
               >
-                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
 
               <Menu>
                 <MenuButton
                   as={Button}
-                  rounded={"full"}
-                  variant={"link"}
-                  cursor={"pointer"}
+                  rounded={'full'}
+                  variant={'link'}
+                  cursor={'pointer'}
                   minW={0}
                   _hover={{
-                    transform: "translateY(-2px)",
-                    boxShadow: "lg",
+                    transform: 'translateY(-2px)',
+                    boxShadow: 'lg',
                   }}
                 >
                   <Avatar
-                    size={"sm"}
+                    size={'sm'}
                     src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${user}`}
-
                   />
                 </MenuButton>
-                <MenuList alignItems={"center"}>
+                <MenuList alignItems={'center'}>
                   <br />
                   <Center>
                     <Avatar
-                      size={"2xl"}
+                      size={'2xl'}
                       src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${user}`}
                     />
                   </Center>

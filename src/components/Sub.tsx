@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState } from "react";
+import { FormEvent, ChangeEvent, useState } from 'react';
 import {
   Stack,
   FormControl,
@@ -24,11 +24,11 @@ import {
   ModalHeader,
   ModalOverlay,
   Divider,
-} from "@chakra-ui/react";
-import { CalendarIcon, CheckIcon } from "@chakra-ui/icons";
-import { NewItem } from "@/data/data";
-import delay from "delay";
-import axios from "axios";
+} from '@chakra-ui/react';
+import { CalendarIcon, CheckIcon } from '@chakra-ui/icons';
+import { NewItem } from '@/data/data';
+import delay from 'delay';
+import axios from 'axios';
 
 type Simple = {
   handleClick: (item: NewItem) => void;
@@ -37,7 +37,7 @@ type Simple = {
 async function getTitle(url: string): Promise<string | undefined> {
   try {
     const res = await axios.get(`/api/title?url=${encodeURIComponent(url)}`);
-    if (res.data.title !== "") {
+    if (res.data.title !== '') {
       return res.data.title;
     }
   } catch (e) {
@@ -47,24 +47,24 @@ async function getTitle(url: string): Promise<string | undefined> {
 }
 
 export default function Simple(props: Simple) {
-  const [url, setUrl] = useState("");
-  const [title, setTitle] = useState("");
-  const [state, setState] = useState<"initial" | "submitting" | "success">(
-    "initial"
+  const [url, setUrl] = useState('');
+  const [title, setTitle] = useState('');
+  const [state, setState] = useState<'initial' | 'submitting' | 'success'>(
+    'initial'
   );
   const [error, setError] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Stack direction={"row"} spacing={"20"}>
+    <Stack direction={'row'} spacing={'20'}>
       <Stack>
         <Wrap>
           <Icon as={CalendarIcon} boxSize={7}></Icon>
           <Heading
-            as={"h1"}
-            fontSize={{ base: "xl", sm: "2xl" }}
-            textAlign={"left"}
+            as={'h1'}
+            fontSize={{ base: 'xl', sm: '2xl' }}
+            textAlign={'left'}
             mb={5}
           >
             News
@@ -79,12 +79,12 @@ export default function Simple(props: Simple) {
 
       <Stack
         direction="row"
-        as={"form"}
-        spacing={"12px"}
+        as={'form'}
+        spacing={'12px'}
         onSubmit={async (e: FormEvent) => {
           e.preventDefault();
           setError(false);
-          setState("submitting");
+          setState('submitting');
           await delay(1000);
           const title = await getTitle(url);
           if (title == undefined) {
@@ -93,52 +93,52 @@ export default function Simple(props: Simple) {
             const item: NewItem = {
               title: title,
               url: url,
-              author: "zhuzhenfeng.code",
-              date: "2023-08-18",
+              author: 'zhuzhenfeng.code',
+              date: '2023-08-18',
               upCount: 0,
             };
 
             await props.handleClick(item);
-            setState("success");
+            setState('success');
             // await delay(1000);
-            setState("initial");
+            setState('initial');
           }
         }}
       >
         <FormControl>
           <Input
-            variant={"solid"}
+            variant={'solid'}
             borderWidth={1}
-            color={"gray.800"}
+            color={'gray.800'}
             _placeholder={{
-              color: "gray.400",
+              color: 'gray.400',
             }}
-            borderColor={useColorModeValue("gray.300", "gray.700")}
-            id={"text"}
-            type={"url"}
+            borderColor={useColorModeValue('gray.300', 'gray.700')}
+            id={'text'}
+            type={'url'}
             required
-            placeholder={"Your URL"}
-            aria-label={"Your URL"}
+            placeholder={'Your URL'}
+            aria-label={'Your URL'}
             value={url}
-            disabled={state !== "initial"}
+            disabled={state !== 'initial'}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setUrl(e.target.value)
             }
           />
         </FormControl>
-        <FormControl w={{ base: "100%", md: "40%" }}>
+        <FormControl w={{ base: '100%', md: '40%' }}>
           <Button
-            colorScheme={state === "success" ? "green" : "purple"}
-            isLoading={state === "submitting"}
+            colorScheme={state === 'success' ? 'green' : 'purple'}
+            isLoading={state === 'submitting'}
             _hover={{
-              transform: "translateY(-2px)",
-              boxShadow: "lg",
+              transform: 'translateY(-2px)',
+              boxShadow: 'lg',
             }}
             w="20"
-            type={state === "success" ? "button" : "submit"}
-            disabled={state === "success"}
+            type={state === 'success' ? 'button' : 'submit'}
+            disabled={state === 'success'}
           >
-            {state === "success" ? <CheckIcon /> : "Add"}
+            {state === 'success' ? <CheckIcon /> : 'Add'}
           </Button>
         </FormControl>
       </Stack>
@@ -149,7 +149,7 @@ export default function Simple(props: Simple) {
           <ModalHeader>编辑</ModalHeader>
           <ModalCloseButton
             onClick={async () => {
-              setState("initial");
+              setState('initial');
               await onClose();
             }}
           />
@@ -161,7 +161,7 @@ export default function Simple(props: Simple) {
               type="text"
               onChange={(e) => {
                 e.preventDefault();
-                if (e.target.value != "") {
+                if (e.target.value != '') {
                   setTitle(e.target.value);
                 }
               }}
@@ -178,16 +178,16 @@ export default function Simple(props: Simple) {
                 const item: NewItem = {
                   title: title,
                   url: url,
-                  author: "fenix",
-                  date: "2023-07-20",
-                  upCount: 0
+                  author: 'fenix',
+                  date: '2023-07-20',
+                  upCount: 0,
                 };
 
                 props.handleClick(item);
-                setState("success");
+                setState('success');
                 await onClose();
                 await delay(1000);
-                setState("initial");
+                setState('initial');
               }}
             >
               Submit
@@ -195,7 +195,7 @@ export default function Simple(props: Simple) {
             <Button
               variant="ghost"
               onClick={async () => {
-                setState("initial");
+                setState('initial');
                 await onClose();
               }}
             >

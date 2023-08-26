@@ -1,17 +1,17 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { Box, Center, Divider, Flex, Stack } from "@chakra-ui/react";
-import ClickMe from "@/components/ClickMe";
-import Simple from "@/components/Sub";
-import Nav from "@/components/Nav";
-import Item from "@/components/Item";
-import { FormEvent, useEffect, useState } from "react";
-import { NewItem } from "@/data/data";
-import { createClient } from "@supabase/supabase-js";
-import { InferGetServerSidePropsType } from "next";
-import { addItem, getAll } from "@/data/supabase";
+import Image from 'next/image';
+import { Inter } from 'next/font/google';
+import { Box, Center, Divider, Flex, Stack } from '@chakra-ui/react';
+import ClickMe from '@/components/ClickMe';
+import Simple from '@/components/Sub';
+import Nav from '@/components/Nav';
+import Item from '@/components/Item';
+import { FormEvent, useEffect, useState } from 'react';
+import { NewItem } from '@/data/data';
+import { createClient } from '@supabase/supabase-js';
+import { InferGetServerSidePropsType } from 'next';
+import { addCountById, addItem, getAll } from '@/data/supabase';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const [data, setData] = useState([] as NewItem[]);
@@ -27,8 +27,14 @@ export default function Home() {
     setData([added].concat(data));
   };
 
+  const handleUp = async () => {
+    console.log('handle up');
+    const all = await getAll();
+    setData(all);
+  };
+
   return (
-    <Box bgImage={"bg.svg"} bgRepeat={"no-repeat"} bgSize={"auto"}>
+    <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
       <Nav></Nav>
       <Center m={5}>
         <Stack>
@@ -37,8 +43,8 @@ export default function Home() {
           {data.map((x, index) => {
             return (
               <Box key={index}>
-                <Item item={x} />
-                <Divider m={3} />
+                <Item item={x} handleUp={handleUp} />
+                <Divider m={3} maxWidth={'90%'} />
               </Box>
             );
           })}

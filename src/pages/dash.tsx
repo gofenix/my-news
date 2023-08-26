@@ -15,16 +15,16 @@ import {
   useColorMode,
   Center,
   Icon,
-} from '@chakra-ui/react'
-import { CalendarIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
-import { useState } from 'react'
+} from '@chakra-ui/react';
+import { CalendarIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const NavLink = (props: Props) => {
-  const { children } = props
+  const { children } = props;
 
   return (
     <Box
@@ -36,17 +36,18 @@ const NavLink = (props: Props) => {
         textDecoration: 'none',
         bg: useColorModeValue('gray.200', 'gray.700'),
       }}
-      href={'#'}>
+      href={'#'}
+    >
       {children}
     </Box>
-  )
-}
+  );
+};
 
 export default function Nav() {
-  const { colorMode, toggleColorMode } = useColorMode()
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [user, setUser] = useState("zhuzhenfeng")
+  const [user, setUser] = useState('zhuzhenfeng');
 
   return (
     <>
@@ -68,7 +69,8 @@ export default function Nav() {
                   rounded={'full'}
                   variant={'link'}
                   cursor={'pointer'}
-                  minW={0}>
+                  minW={0}
+                >
                   <Avatar
                     size={'sm'}
                     src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${user}`}
@@ -98,5 +100,5 @@ export default function Nav() {
         </Flex>
       </Box>
     </>
-  )
+  );
 }
