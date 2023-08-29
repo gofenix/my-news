@@ -52,109 +52,111 @@ export default function Item(props: NewItemProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Stack direction={'row'} spacing={'3'} align={'baseline'}>
-      <Stack
-        direction="column"
-        border="1px solid"
-        borderColor="purple.200"
-        w={12}
-        h={12}
-        // isLoading={loading}
-        disabled={loading}
-        justify={'center'}
-        align={'center'}
-        as={Button}
-        onClick={async () => {
-          setLoading(true);
-          const addCount = (item.upCount || 0) + 1;
-          console.log(item);
-          console.log(addCount);
-          await addCountById(item.id || 0, addCount);
-          await handleUp();
-          setLoading(false);
-        }}
-        variant={'outline'}
-        colorScheme="purple"
-        _hover={{
-          transform: 'translateY(-2px)',
-          boxShadow: 'lg',
-        }}
-      >
-        <Icon as={ChevronUpIcon} boxSize={'4'}></Icon>
-        <Text color={'gray.500'} m={'-1'}>
-          +{item.upCount}
-        </Text>
-      </Stack>
-
-      <Stack spacing={1}>
-        <Link href={item.url} isExternal>
-          <Stack align={'baseline'} direction={'row'}>
-            <Text
-              fontSize="md"
-              as={'b'}
-              isTruncated={true}
-              maxWidth={window.innerWidth * 0.25}
-            >
-              {item.title}
-            </Text>
-            <Text
-              fontSize="md"
-              isTruncated={true}
-              maxWidth={window.innerWidth * 0.4}
-            >
-              {`(${item.url})`}
-              <ExternalLinkIcon />
-            </Text>
-          </Stack>
-        </Link>
-        <Stack direction={'row'} align={'center'}>
-          <Text fontSize="sm">by</Text>
-          <Text fontSize="sm" as="i">
-            @{item.author}
+    <Box>
+      <Flex direction={'row'} align={'baseline'}>
+        <Stack
+          direction="column"
+          border="1px solid"
+          borderColor="purple.200"
+          w={12}
+          h={12}
+          // isLoading={loading}
+          disabled={loading}
+          justify={'center'}
+          align={'center'}
+          as={Button}
+          onClick={async () => {
+            setLoading(true);
+            const addCount = (item.upCount || 0) + 1;
+            console.log(item);
+            console.log(addCount);
+            await addCountById(item.id || 0, addCount);
+            await handleUp();
+            setLoading(false);
+          }}
+          variant={'outline'}
+          colorScheme="purple"
+          _hover={{
+            transform: 'translateY(-2px)',
+            boxShadow: 'lg',
+          }}
+        >
+          <Icon as={ChevronUpIcon} boxSize={'4'}></Icon>
+          <Text color={'gray.500'} m={'-1'}>
+            +{item.upCount}
           </Text>
-          <Text fontSize="sm">at</Text>
-          <Text fontSize="sm" as="i">
-            {formatDate(item.date)}
-          </Text>
-          {iconVisible && (
-            <Icon
-              as={InfoOutlineIcon}
-              boxSize={3}
-              color={'purple'}
-              onClick={() => {
-                setDigestOpen(!digestOpen);
-              }}
-              _hover={{
-                transform: 'translateY(-2px)',
-                boxShadow: 'lg',
-              }}
-            ></Icon>
-          )}
         </Stack>
-        <Collapse in={digestOpen} animateOpacity>
-          <Stack
-            direction={'row'}
-            align={'baseline'}
-            maxWidth={window.innerWidth * 0.55}
-          >
-            <Text fontSize={'sm'}>
-              {item.digest}
+        <Box m="2"></Box>
+        <Flex direction={'column'}>
+          <Link href={item.url} isExternal>
+            <Flex align={'baseline'} direction={'row'}>
+              <Text
+                fontSize="md"
+                as={'b'}
+                isTruncated={true}
+                maxWidth={window.innerWidth * 0.25}
+              >
+                {item.title}
+              </Text>
+              <Text
+                fontSize="md"
+                isTruncated={true}
+                maxWidth={window.innerWidth * 0.4}
+              >
+                {`(${item.url})`}
+                <ExternalLinkIcon />
+              </Text>
+            </Flex>
+          </Link>
+          <Stack direction={'row'} align={'center'}>
+            <Text fontSize="sm">by</Text>
+            <Text fontSize="sm" as="i">
+              @{item.author}
+            </Text>
+            <Text fontSize="sm">at</Text>
+            <Text fontSize="sm" as="i">
+              {formatDate(item.date)}
+            </Text>
+            {iconVisible && (
               <Icon
-                as={EditIcon}
+                as={InfoOutlineIcon}
                 boxSize={3}
                 color={'purple'}
                 onClick={() => {
-                  onOpen();
+                  setDigestOpen(!digestOpen);
                 }}
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: 'lg',
                 }}
               ></Icon>
-            </Text>
+            )}
           </Stack>
-        </Collapse>
-      </Stack>
+          <Collapse in={digestOpen} animateOpacity>
+            <Stack
+              direction={'row'}
+              align={'baseline'}
+              maxWidth={window.innerWidth * 0.55}
+            >
+              <Text fontSize={'sm'}>
+                {item.digest}
+                <Icon
+                  as={EditIcon}
+                  boxSize={3}
+                  color={'purple'}
+                  onClick={() => {
+                    onOpen();
+                  }}
+                  _hover={{
+                    transform: 'translateY(-2px)',
+                    boxShadow: 'lg',
+                  }}
+                ></Icon>
+              </Text>
+            </Stack>
+          </Collapse>
+        </Flex>
+      </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -181,7 +183,7 @@ export default function Item(props: NewItemProps) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Stack>
+    </Box>
   );
 }
 

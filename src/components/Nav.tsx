@@ -50,70 +50,68 @@ export default function Nav() {
   const [user, setUser] = useState('zhuzhenfeng');
 
   return (
-    <>
-      <Box
-        bg={useColorModeValue('gray.100', 'gray.900')}
-        bgImage={'bg.svg'}
-        px={4}
-      >
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Box>
-            <Icon as={CalendarIcon} boxSize={6}></Icon>
-          </Box>
+    <Box
+      bg={useColorModeValue('gray.100', 'gray.900')}
+      bgImage={'bg.svg'}
+      px={4}
+    >
+      <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+        <Box>
+          <Icon as={CalendarIcon} boxSize={6}></Icon>
+        </Box>
 
-          <Flex alignItems={'center'}>
-            <Stack direction={'row'} spacing={5}>
-              <Button
-                onClick={toggleColorMode}
+        <Flex alignItems={'center'}>
+          <Stack direction={'row'} spacing={5}>
+            <Button
+              onClick={toggleColorMode}
+              variant={'link'}
+              _hover={{
+                transform: 'translateY(-2px)',
+                boxShadow: 'lg',
+              }}
+            >
+              {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+            </Button>
+
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
                 variant={'link'}
+                cursor={'pointer'}
+                minW={0}
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: 'lg',
                 }}
               >
-                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-              </Button>
-
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rounded={'full'}
-                  variant={'link'}
-                  cursor={'pointer'}
-                  minW={0}
-                  _hover={{
-                    transform: 'translateY(-2px)',
-                    boxShadow: 'lg',
-                  }}
-                >
+                <Avatar
+                  size={'sm'}
+                  src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${user}`}
+                />
+              </MenuButton>
+              <MenuList alignItems={'center'}>
+                <br />
+                <Center>
                   <Avatar
-                    size={'sm'}
+                    size={'2xl'}
                     src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${user}`}
                   />
-                </MenuButton>
-                <MenuList alignItems={'center'}>
-                  <br />
-                  <Center>
-                    <Avatar
-                      size={'2xl'}
-                      src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${user}`}
-                    />
-                  </Center>
-                  <br />
-                  <Center>
-                    <p>Username</p>
-                  </Center>
-                  <br />
-                  <MenuDivider />
-                  <MenuItem>Your Servers</MenuItem>
-                  <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
-                </MenuList>
-              </Menu>
-            </Stack>
-          </Flex>
+                </Center>
+                <br />
+                <Center>
+                  <p>Username</p>
+                </Center>
+                <br />
+                <MenuDivider />
+                <MenuItem>Your Servers</MenuItem>
+                <MenuItem>Account Settings</MenuItem>
+                <MenuItem>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          </Stack>
         </Flex>
-      </Box>
-    </>
+      </Flex>
+    </Box>
   );
 }

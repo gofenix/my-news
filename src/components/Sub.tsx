@@ -57,91 +57,92 @@ export default function Simple(props: Simple) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Stack direction={'row'} spacing={'20'}>
-      <Stack>
-        <Wrap>
-          <Icon as={CalendarIcon} boxSize={7}></Icon>
-          <Heading
-            as={'h1'}
-            fontSize={{ base: 'xl', sm: '2xl' }}
-            textAlign={'left'}
-            mb={5}
-          >
-            News
-          </Heading>
-        </Wrap>
+    <Box>
+      <Flex direction={'row'} justifyContent={'space-between'}>
+        <Flex direction={'column'}>
+          <Wrap>
+            <Icon as={CalendarIcon} boxSize={7}></Icon>
+            <Heading
+              as={'h1'}
+              fontSize={{ base: 'xl', sm: '2xl' }}
+              textAlign={'left'}
+              mb={5}
+            >
+              News
+            </Heading>
+          </Wrap>
 
-        <Text>
-          Get your daily dose of Phoenix, Elixir, Tailwind, Alpine JS and
-          LiveView news
-        </Text>
-      </Stack>
+          <Text>
+            Get your daily dose of Phoenix, Elixir, Tailwind, Alpine JS and
+            LiveView news
+          </Text>
+        </Flex>
 
-      <Stack
-        direction="row"
-        as={'form'}
-        spacing={'12px'}
-        onSubmit={async (e: FormEvent) => {
-          e.preventDefault();
-          setError(false);
-          setState('submitting');
-          await delay(1000);
-          const title = await getTitle(url);
-          if (title == undefined) {
-            await onOpen();
-          } else {
-            const item: NewItem = {
-              title: title,
-              url: url,
-              author: 'zhuzhenfeng.code',
-              date: '2023-08-18',
-              upCount: 0,
-            };
+        <Flex
+          direction="row"
+          as={'form'}
+          onSubmit={async (e: FormEvent) => {
+            e.preventDefault();
+            setError(false);
+            setState('submitting');
+            await delay(1000);
+            const title = await getTitle(url);
+            if (title == undefined) {
+              await onOpen();
+            } else {
+              const item: NewItem = {
+                title: title,
+                url: url,
+                author: 'zhuzhenfeng.code',
+                date: '2023-08-18',
+                upCount: 0,
+              };
 
-            await props.handleClick(item);
-            setState('success');
-            // await delay(1000);
-            setState('initial');
-          }
-        }}
-      >
-        <FormControl>
-          <Input
-            variant={'solid'}
-            borderWidth={1}
-            color={'gray.800'}
-            _placeholder={{
-              color: 'gray.400',
-            }}
-            borderColor={useColorModeValue('gray.300', 'gray.700')}
-            id={'text'}
-            type={'url'}
-            required
-            placeholder={'Your URL'}
-            aria-label={'Your URL'}
-            value={url}
-            disabled={state !== 'initial'}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setUrl(e.target.value)
+              await props.handleClick(item);
+              setState('success');
+              // await delay(1000);
+              setState('initial');
             }
-          />
-        </FormControl>
-        <FormControl w={{ base: '100%', md: '40%' }}>
-          <Button
-            colorScheme={state === 'success' ? 'green' : 'purple'}
-            isLoading={state === 'submitting'}
-            _hover={{
-              transform: 'translateY(-2px)',
-              boxShadow: 'lg',
-            }}
-            w="20"
-            type={state === 'success' ? 'button' : 'submit'}
-            disabled={state === 'success'}
-          >
-            {state === 'success' ? <CheckIcon /> : 'Add'}
-          </Button>
-        </FormControl>
-      </Stack>
+          }}
+        >
+          <FormControl>
+            <Input
+              variant={'solid'}
+              borderWidth={1}
+              color={'gray.800'}
+              _placeholder={{
+                color: 'gray.400',
+              }}
+              borderColor={useColorModeValue('gray.300', 'gray.700')}
+              id={'text'}
+              type={'url'}
+              required
+              placeholder={'Your URL'}
+              aria-label={'Your URL'}
+              value={url}
+              disabled={state !== 'initial'}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setUrl(e.target.value)
+              }
+            />
+          </FormControl>
+          <FormControl w={{ base: '100%', md: '40%' }}>
+            <Button
+              colorScheme={state === 'success' ? 'green' : 'purple'}
+              isLoading={state === 'submitting'}
+              _hover={{
+                transform: 'translateY(-2px)',
+                boxShadow: 'lg',
+              }}
+              w="20"
+              type={state === 'success' ? 'button' : 'submit'}
+              disabled={state === 'success'}
+            >
+              {state === 'success' ? <CheckIcon /> : 'Add'}
+            </Button>
+          </FormControl>
+        </Flex>
+      </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -204,6 +205,6 @@ export default function Simple(props: Simple) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Stack>
+    </Box>
   );
 }

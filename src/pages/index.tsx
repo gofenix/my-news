@@ -1,4 +1,4 @@
-import { Box, Center, Divider, Fade, Stack } from '@chakra-ui/react';
+import { Box, Center, Divider, Fade, Flex, Stack } from '@chakra-ui/react';
 import Simple from '@/components/Sub';
 import Nav from '@/components/Nav';
 import Item from '@/components/Item';
@@ -29,22 +29,22 @@ export default function Home() {
   return (
     <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
       <Nav></Nav>
-      <Center m={5}>
-        <Stack>
+      <Flex justifyContent={'center'}>
+        <Box w={'70%'}>
           <Simple handleClick={handleClick}></Simple>
-          <Box m={5}></Box>
+          <Box m="10"></Box>
           {data.map((x, index) => {
             return (
               <Fade in key={index}>
                 <Box>
                   <Item item={x} handleUp={handleUp} />
-                  <Divider m={3} maxWidth={'90%'} />
+                  <Divider m={3} />
                 </Box>
               </Fade>
             );
           })}
-        </Stack>
-      </Center>
+        </Box>
+      </Flex>
     </Box>
   );
 }
