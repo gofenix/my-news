@@ -20,11 +20,11 @@ export async function getAll(): Promise<NewItem[]> {
       author: item.author,
       upCount: item.up_count,
       date: item.created_at,
-      digest: item.digest
+      digest: item.digest,
     } as NewItem;
   });
 
-  console.log(error)
+  console.log(error);
 
   return news || [];
 }
@@ -48,7 +48,7 @@ export async function addCountById(
         author: item.author,
         upCount: item.up_count,
         date: item.created_at,
-        digest: item.digest
+        digest: item.digest,
       } as NewItem;
     })
     .at(0);
@@ -74,7 +74,7 @@ export async function addItem(item: NewItem): Promise<NewItem> {
           author: item.author,
           upCount: item.up_count,
           date: item.created_at,
-          digest: item.digest
+          digest: item.digest,
         } as NewItem;
       })
       .at(0) || ({} as NewItem)

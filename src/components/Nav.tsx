@@ -62,7 +62,7 @@ export default function Nav() {
           </Box>
 
           <Flex alignItems={'center'}>
-            <Stack direction={'row'} spacing={7}>
+            <Stack direction={'row'} spacing={5}>
               <Button
                 onClick={toggleColorMode}
                 variant={'link'}

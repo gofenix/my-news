@@ -1,17 +1,10 @@
-import {
-  Box,
-  Center,
-  Divider,
-  Fade,
-  Stack,
-} from '@chakra-ui/react';
+import { Box, Center, Divider, Fade, Stack } from '@chakra-ui/react';
 import Simple from '@/components/Sub';
 import Nav from '@/components/Nav';
 import Item from '@/components/Item';
 import { useEffect, useState } from 'react';
 import { NewItem } from '@/data/data';
 import { addItem, getAll } from '@/data/supabase';
-
 
 export default function Home() {
   const [data, setData] = useState([] as NewItem[]);
@@ -43,7 +36,7 @@ export default function Home() {
           {data.map((x, index) => {
             return (
               <Fade in key={index}>
-                <Box >
+                <Box>
                   <Item item={x} handleUp={handleUp} />
                   <Divider m={3} maxWidth={'90%'} />
                 </Box>
