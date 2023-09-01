@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Button, useColorModeValue } from '@chakra-ui/react';
 
 function randomColor() {
   return Math.floor(Math.random() * 5);

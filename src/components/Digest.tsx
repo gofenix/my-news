@@ -1,12 +1,4 @@
-import { InfoIcon } from '@chakra-ui/icons';
-import {
-  Button,
-  Collapse,
-  Icon,
-  IconButton,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Collapse, Stack, Text } from '@chakra-ui/react';
 import { useCompletion } from 'ai/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';

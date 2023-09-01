@@ -1,38 +1,23 @@
 import { FormEvent, ChangeEvent, useState } from 'react';
 import {
-  Stack,
   FormControl,
   Input,
   Button,
   useColorModeValue,
   Heading,
   Text,
-  Container,
   Flex,
-  SimpleGrid,
   Box,
-  Spacer,
-  Center,
   Icon,
   Wrap,
   useDisclosure,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Divider,
 } from '@chakra-ui/react';
 import { CalendarIcon, CheckIcon } from '@chakra-ui/icons';
 import { NewItem } from '@/data/data';
 import delay from 'delay';
 import axios from 'axios';
-
-type Simple = {
-  handleClick: (item: NewItem) => void;
-};
+import { addItem } from '@/data/supabase';
+import EditModal from './EditModal';
 
 async function getTitle(url: string): Promise<string | undefined> {
   try {
@@ -46,15 +31,24 @@ async function getTitle(url: string): Promise<string | undefined> {
   return undefined;
 }
 
-export default function Simple(props: Simple) {
+type SimpleProps = {
+  handleUp: () => void;
+};
+
+export default function Simple(props: SimpleProps) {
   const [url, setUrl] = useState('');
-  const [title, setTitle] = useState('');
+  const [item, setItem] = useState({} as NewItem);
   const [state, setState] = useState<'initial' | 'submitting' | 'success'>(
     'initial'
   );
-  const [error, setError] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { handleUp } = props;
+
+  const addModalClose = async () => {
+    await onClose();
+    setState('initial');
+  };
 
   return (
     <Box>
@@ -83,11 +77,16 @@ export default function Simple(props: Simple) {
           as={'form'}
           onSubmit={async (e: FormEvent) => {
             e.preventDefault();
-            setError(false);
             setState('submitting');
             await delay(1000);
             const title = await getTitle(url);
             if (title == undefined) {
+              const item = {
+                title: '',
+                url: url,
+                author: 'zhuzhenfeng.code',
+              } as NewItem;
+              setItem(item);
               await onOpen();
             } else {
               const item: NewItem = {
@@ -98,9 +97,10 @@ export default function Simple(props: Simple) {
                 upCount: 0,
               };
 
-              await props.handleClick(item);
               setState('success');
-              // await delay(1000);
+              await addItem(item);
+              await handleUp();
+              await delay(1000);
               setState('initial');
             }
           }}
@@ -126,6 +126,7 @@ export default function Simple(props: Simple) {
               }
             />
           </FormControl>
+          <Box m="1"></Box>
           <FormControl w={{ base: '100%', md: '40%' }}>
             <Button
               colorScheme={state === 'success' ? 'green' : 'purple'}
@@ -144,67 +145,12 @@ export default function Simple(props: Simple) {
         </Flex>
       </Flex>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>编辑</ModalHeader>
-          <ModalCloseButton
-            onClick={async () => {
-              setState('initial');
-              await onClose();
-            }}
-          />
-          <Divider />
-          <ModalBody></ModalBody>
-          <Stack m={3}>
-            <Text>Title</Text>
-            <Input
-              type="text"
-              onChange={(e) => {
-                e.preventDefault();
-                if (e.target.value != '') {
-                  setTitle(e.target.value);
-                }
-              }}
-            ></Input>
-            <Text>Url</Text>
-            <Input type="url" value={url}></Input>
-          </Stack>
-
-          <ModalFooter>
-            <Button
-              colorScheme="blue"
-              mr={3}
-              onClick={async () => {
-                const item: NewItem = {
-                  title: title,
-                  url: url,
-                  author: 'fenix',
-                  date: '2023-07-20',
-                  upCount: 0,
-                };
-
-                props.handleClick(item);
-                setState('success');
-                await onClose();
-                await delay(1000);
-                setState('initial');
-              }}
-            >
-              Submit
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={async () => {
-                setState('initial');
-                await onClose();
-              }}
-            >
-              Cancel
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <EditModal
+        isOpen={isOpen}
+        item={item}
+        onClose={addModalClose}
+        handleUp={handleUp}
+      ></EditModal>
     </Box>
   );
 }

@@ -7,3 +7,9 @@ export type NewItem = {
   upCount?: number;
   digest?: string;
 };
+
+export type UpdData = {
+  title?: string;
+  url?: string;
+  digest?: string;
+};

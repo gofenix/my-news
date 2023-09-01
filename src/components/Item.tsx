@@ -1,54 +1,36 @@
-import {
-  AtSignIcon,
-  ChatIcon,
-  ChevronUpIcon,
-  EditIcon,
-  InfoOutlineIcon,
-} from '@chakra-ui/icons';
+import { ChevronUpIcon, EditIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
-  Center,
   Collapse,
   Flex,
-  FormControl,
-  FormLabel,
-  Heading,
   Icon,
-  IconButton,
-  Input,
   Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Stack,
   Text,
-  Wrap,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { NewItem } from '@/data/data';
+import { NewItem, UpdData } from '@/data/data';
 import { addCountById } from '@/data/supabase';
 import dayjs from 'dayjs';
-import delay from 'delay';
-import Digest from './Digest';
+import EditModal from './EditModal';
 
 type NewItemProps = {
   item: NewItem;
-  handleUp: () => {};
+  handleUp: () => void;
 };
 
 export default function Item(props: NewItemProps) {
   const { item, handleUp } = props;
   const [count, setCount] = useState(item.upCount || 0);
   const [loading, setLoading] = useState(false);
-  const [digestOpen, setDigestOpen] = useState(false);
-  const [iconVisible, setIconVisible] = useState(item.digest != '');
+  const [digestOpen, setDigestOpen] = useState(true);
+  const [iconVisible, setIconVisible] = useState(
+    item.digest !== null && item.digest != ''
+  );
+  const [updData, setUpdData] = useState({} as UpdData);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -117,6 +99,18 @@ export default function Item(props: NewItemProps) {
             <Text fontSize="sm" as="i">
               {formatDate(item.date)}
             </Text>
+            <Icon
+              as={EditIcon}
+              boxSize={3}
+              color={'purple'}
+              onClick={() => {
+                onOpen();
+              }}
+              _hover={{
+                transform: 'translateY(-2px)',
+                boxShadow: 'lg',
+              }}
+            ></Icon>
             {iconVisible && (
               <Icon
                 as={InfoOutlineIcon}
@@ -138,77 +132,19 @@ export default function Item(props: NewItemProps) {
               align={'baseline'}
               maxWidth={window.innerWidth * 0.55}
             >
-              <Text fontSize={'sm'}>
-                {item.digest}
-                <Icon
-                  as={EditIcon}
-                  boxSize={3}
-                  color={'purple'}
-                  onClick={() => {
-                    onOpen();
-                  }}
-                  _hover={{
-                    transform: 'translateY(-2px)',
-                    boxShadow: 'lg',
-                  }}
-                ></Icon>
-              </Text>
+              <Text fontSize={'sm'}>{item.digest}</Text>
             </Stack>
           </Collapse>
         </Flex>
       </Flex>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Update this new</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl>
-              <FormLabel>First name</FormLabel>
-              <Input placeholder="First name" />
-            </FormControl>
-
-            <FormControl mt={4}>
-              <FormLabel>Last name</FormLabel>
-              <Input placeholder="Last name" />
-            </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <EditModal
+        isOpen={isOpen}
+        onClose={onClose}
+        item={item}
+        handleUp={handleUp}
+      />
     </Box>
-  );
-}
-
-function BasicUsage() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  return (
-    <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>hello world</ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
   );
 }
 

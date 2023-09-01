@@ -1,6 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { NewItem } from '@/data/data';
-import dayjs from 'dayjs';
+import { NewItem, UpdData } from '@/data/data';
 
 const supabaseUrl = 'https://picwqygjdjkgpkoivdxn.supabase.co';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
@@ -60,7 +59,13 @@ export async function addItem(item: NewItem): Promise<NewItem> {
   const { data } = await supabase
     .from('news')
     .insert([
-      { title: item.title, url: item.url, author: item.author, up_count: 0 },
+      {
+        title: item.title,
+        url: item.url,
+        author: item.author,
+        up_count: 0,
+        digest: item.digest || '',
+      },
     ])
     .select();
 
@@ -79,4 +84,13 @@ export async function addItem(item: NewItem): Promise<NewItem> {
       })
       .at(0) || ({} as NewItem)
   );
+}
+
+export async function updateById(id: number, updData: UpdData): Promise<void> {
+  console.log(updData);
+  await supabase
+    .from('news')
+    .update({ ...updData })
+    .eq('id', id)
+    .select();
 }

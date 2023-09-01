@@ -1,13 +1,18 @@
-import { Box, Center, Divider, Fade, Flex, Stack } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import Simple from '@/components/Sub';
 import Nav from '@/components/Nav';
-import Item from '@/components/Item';
 import { useEffect, useState } from 'react';
 import { NewItem } from '@/data/data';
-import { addItem, getAll } from '@/data/supabase';
+import { getAll } from '@/data/supabase';
+import NewsList from '@/components/NewsList';
 
 export default function Home() {
   const [data, setData] = useState([] as NewItem[]);
+
+  const handleUp = async () => {
+    const all = await getAll();
+    setData(all);
+  };
 
   useEffect(() => {
     getAll().then((res) => {
@@ -15,34 +20,14 @@ export default function Home() {
     });
   }, []);
 
-  const handleClick = async (item: NewItem) => {
-    const added = await addItem(item);
-    setData([added].concat(data));
-  };
-
-  const handleUp = async () => {
-    console.log('handle up');
-    const all = await getAll();
-    setData(all);
-  };
-
   return (
     <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
       <Nav></Nav>
+      <Box m={'6'}></Box>
       <Flex justifyContent={'center'}>
-        <Box w={'70%'}>
-          <Simple handleClick={handleClick}></Simple>
-          <Box m="10"></Box>
-          {data.map((x, index) => {
-            return (
-              <Fade in key={index}>
-                <Box>
-                  <Item item={x} handleUp={handleUp} />
-                  <Divider m={3} />
-                </Box>
-              </Fade>
-            );
-          })}
+        <Box w={'60%'}>
+          <Simple handleUp={handleUp}></Simple>
+          <NewsList data={data} handleUp={handleUp} />
         </Box>
       </Flex>
     </Box>

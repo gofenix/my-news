@@ -2,7 +2,6 @@ import {
   Box,
   Flex,
   Avatar,
-  Text,
   Button,
   Menu,
   MenuButton,
@@ -23,26 +22,6 @@ interface Props {
   children: React.ReactNode;
 }
 
-const NavLink = (props: Props) => {
-  const { children } = props;
-
-  return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={'md'}
-      _hover={{
-        textDecoration: 'none',
-        bg: useColorModeValue('gray.200', 'gray.700'),
-      }}
-      href={'#'}
-    >
-      {children}
-    </Box>
-  );
-};
-
 export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,7 +34,7 @@ export default function Nav() {
       bgImage={'bg.svg'}
       px={4}
     >
-      <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+      <Flex h={14} alignItems={'center'} justifyContent={'space-between'}>
         <Box>
           <Icon as={CalendarIcon} boxSize={6}></Icon>
         </Box>
