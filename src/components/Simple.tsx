@@ -92,18 +92,17 @@ export default function Simple(props: SimpleProps) {
                 const item = {
                   title: '',
                   url: url,
-                  author: 'zhuzhenfeng.code',
+                  author: user.user_metadata.name,
                 } as NewItem;
                 setItem(item);
                 await onOpen();
               } else {
-                const item: NewItem = {
+                const item = {
                   title: title,
                   url: url,
-                  author: 'zhuzhenfeng.code',
-                  date: '2023-08-18',
+                  author: user.user_metadata.name,
                   upCount: 0,
-                };
+                } as NewItem;
 
                 setState('success');
                 await addItem(item);
