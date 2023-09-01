@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { User, createClient } from '@supabase/supabase-js';
 import { NewItem, UpdData } from '@/data/data';
 
 const supabaseUrl = 'https://picwqygjdjkgpkoivdxn.supabase.co';
@@ -93,4 +93,16 @@ export async function updateById(id: number, updData: UpdData): Promise<void> {
     .update({ ...updData })
     .eq('id', id)
     .select();
+}
+
+export async function signInWithGitHub() {
+  await supabase.auth.signInWithOAuth({
+    provider: 'github',
+  });
+}
+
+export async function getUser(): Promise<User> {
+  const { data, error } = await supabase.auth.getUser();
+  console.log(data.user);
+  return data.user!;
 }

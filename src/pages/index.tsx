@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react';
-import Simple from '@/components/Sub';
+import Simple from '@/components/Simple';
 import Nav from '@/components/Nav';
 import { useEffect, useState } from 'react';
 import { NewItem } from '@/data/data';

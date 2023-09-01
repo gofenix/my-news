@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState } from 'react';
+import { FormEvent, ChangeEvent, useState, useEffect } from 'react';
 import {
   FormControl,
   Input,
@@ -16,8 +16,9 @@ import { CalendarIcon, CheckIcon } from '@chakra-ui/icons';
 import { NewItem } from '@/data/data';
 import delay from 'delay';
 import axios from 'axios';
-import { addItem } from '@/data/supabase';
+import { addItem, getUser, signInWithGitHub } from '@/data/supabase';
 import EditModal from './EditModal';
+import { User } from '@supabase/supabase-js';
 
 async function getTitle(url: string): Promise<string | undefined> {
   try {
@@ -44,11 +45,17 @@ export default function Simple(props: SimpleProps) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleUp } = props;
-
   const addModalClose = async () => {
     await onClose();
     setState('initial');
   };
+  const [user, setUser] = useState({} as User);
+
+  useEffect(() => {
+    getUser().then((value) => {
+      setUser(value);
+    });
+  }, []);
 
   return (
     <Box>
@@ -78,30 +85,34 @@ export default function Simple(props: SimpleProps) {
           onSubmit={async (e: FormEvent) => {
             e.preventDefault();
             setState('submitting');
-            await delay(1000);
-            const title = await getTitle(url);
-            if (title == undefined) {
-              const item = {
-                title: '',
-                url: url,
-                author: 'zhuzhenfeng.code',
-              } as NewItem;
-              setItem(item);
-              await onOpen();
-            } else {
-              const item: NewItem = {
-                title: title,
-                url: url,
-                author: 'zhuzhenfeng.code',
-                date: '2023-08-18',
-                upCount: 0,
-              };
-
-              setState('success');
-              await addItem(item);
-              await handleUp();
+            if (user && user.user_metadata && user.user_metadata.avatar_url) {
               await delay(1000);
-              setState('initial');
+              const title = await getTitle(url);
+              if (title == undefined) {
+                const item = {
+                  title: '',
+                  url: url,
+                  author: 'zhuzhenfeng.code',
+                } as NewItem;
+                setItem(item);
+                await onOpen();
+              } else {
+                const item: NewItem = {
+                  title: title,
+                  url: url,
+                  author: 'zhuzhenfeng.code',
+                  date: '2023-08-18',
+                  upCount: 0,
+                };
+
+                setState('success');
+                await addItem(item);
+                await handleUp();
+                await delay(1000);
+                setState('initial');
+              }
+            } else {
+              signInWithGitHub();
             }
           }}
         >

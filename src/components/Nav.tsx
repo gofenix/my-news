@@ -16,7 +16,10 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { CalendarIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getUser, signInWithGitHub } from '@/data/supabase';
+import { GoPerson } from 'react-icons/go';
+import { User } from '@supabase/supabase-js';
 
 interface Props {
   children: React.ReactNode;
@@ -25,8 +28,13 @@ interface Props {
 export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [user, setUser] = useState({} as User);
 
-  const [user, setUser] = useState('zhuzhenfeng');
+  useEffect(() => {
+    getUser().then((value) => {
+      setUser(value);
+    });
+  }, []);
 
   return (
     <Box
@@ -51,43 +59,25 @@ export default function Nav() {
             >
               {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
             </Button>
-
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={'full'}
-                variant={'link'}
-                cursor={'pointer'}
-                minW={0}
+            {user && user.user_metadata && user.user_metadata.avatar_url ? (
+              <Avatar size={'sm'} src={user.user_metadata.avatar_url} />
+            ) : (
+              <Button
+                onClick={async () => {
+                  await signInWithGitHub();
+                  const user = await getUser();
+                  setUser(user);
+                }}
+                variant={'ghost'}
+                colorScheme="green.300"
                 _hover={{
                   transform: 'translateY(-2px)',
                   boxShadow: 'lg',
                 }}
               >
-                <Avatar
-                  size={'sm'}
-                  src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${user}`}
-                />
-              </MenuButton>
-              <MenuList alignItems={'center'}>
-                <br />
-                <Center>
-                  <Avatar
-                    size={'2xl'}
-                    src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${user}`}
-                  />
-                </Center>
-                <br />
-                <Center>
-                  <p>Username</p>
-                </Center>
-                <br />
-                <MenuDivider />
-                <MenuItem>Your Servers</MenuItem>
-                <MenuItem>Account Settings</MenuItem>
-                <MenuItem>Logout</MenuItem>
-              </MenuList>
-            </Menu>
+                <GoPerson />
+              </Button>
+            )}
           </Stack>
         </Flex>
       </Flex>
