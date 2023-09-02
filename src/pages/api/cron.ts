@@ -5,8 +5,12 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest,
     res: NextApiResponse) {
+    run()
+    res.status(200).end("hell cron");
+}
+
+async function run() {
     const all = await getAll();
-    let data = []
     for (let a of all) {
         if (a.digest !== null && a.digest !== '') {
             console.log(`${a.id} + ${a.title} digest is blank`)
@@ -25,7 +29,6 @@ export default async function handler(req: NextApiRequest,
         }
         const updData = { digest } as UpdData;
         await updateById(a.id!, updData);
-        data.push({ id: a.id, digest: a.digest })
+        console.log(JSON.stringify({ id: a.id, digest: a.digest }))
     }
-    res.status(200).end(JSON.stringify(data));
 }
