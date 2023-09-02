@@ -86,8 +86,8 @@ export default function Simple(props: SimpleProps) {
             e.preventDefault();
             setState('submitting');
             if (user && user.user_metadata && user.user_metadata.avatar_url) {
-              await delay(1000);
               const title = await getTitle(url);
+
               if (title == undefined) {
                 const item = {
                   title: '',
@@ -107,7 +107,6 @@ export default function Simple(props: SimpleProps) {
                 setState('success');
                 await addItem(item);
                 await handleUp();
-                await delay(1000);
                 setState('initial');
               }
             } else {

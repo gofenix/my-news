@@ -42,7 +42,6 @@ export default function Item(props: NewItemProps) {
           borderColor="purple.200"
           w={12}
           h={12}
-          // isLoading={loading}
           disabled={loading}
           justify={'center'}
           align={'center'}
@@ -50,8 +49,6 @@ export default function Item(props: NewItemProps) {
           onClick={async () => {
             setLoading(true);
             const addCount = (item.upCount || 0) + 1;
-            console.log(item);
-            console.log(addCount);
             await addCountById(item.id || 0, addCount);
             await handleUp();
             setLoading(false);

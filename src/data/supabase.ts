@@ -103,6 +103,5 @@ export async function signInWithGitHub() {
 
 export async function getUser(): Promise<User> {
   const { data, error } = await supabase.auth.getUser();
-  console.log(data.user);
   return data.user!;
 }
