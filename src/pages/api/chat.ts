@@ -10,7 +10,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log('---this is req');
   console.log(req.body);
 
   const aiResponse = await openai.chat.completions.create({

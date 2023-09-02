@@ -27,7 +27,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log('----------------->');
   console.log(req.query);
 
   const { url } = req.query;

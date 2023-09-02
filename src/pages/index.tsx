@@ -24,14 +24,6 @@ export default function Home() {
   return (
     <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
       <Nav></Nav>
-      <Button
-        onClick={async () => {
-
-        }}
-      >
-        {' '}
-        get digest
-      </Button>
       <Box m={'6'}></Box>
       <Flex justifyContent={'center'}>
         <Box w={'60%'}>
