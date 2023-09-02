@@ -1,10 +1,11 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Button, Flex } from '@chakra-ui/react';
 import Simple from '@/components/Simple';
 import Nav from '@/components/Nav';
 import { useEffect, useState } from 'react';
-import { NewItem } from '@/data/data';
-import { getAll } from '@/data/supabase';
+import { NewItem, UpdData } from '@/data/data';
+import { getAll, updateById } from '@/data/supabase';
 import NewsList from '@/components/NewsList';
+import { genDigest, getContent } from '@/data/ai';
 
 export default function Home() {
   const [data, setData] = useState([] as NewItem[]);
@@ -23,6 +24,14 @@ export default function Home() {
   return (
     <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
       <Nav></Nav>
+      <Button
+        onClick={async () => {
+
+        }}
+      >
+        {' '}
+        get digest
+      </Button>
       <Box m={'6'}></Box>
       <Flex justifyContent={'center'}>
         <Box w={'60%'}>
