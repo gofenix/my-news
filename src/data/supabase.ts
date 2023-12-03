@@ -28,6 +28,30 @@ export async function getAll(): Promise<NewItem[]> {
   return news || [];
 }
 
+export async function getTrending(): Promise<NewItem[]> {
+  let { data, error } = await supabase
+    .from('news')
+    .select('*')
+    .order('up_count', { ascending: false })
+    .limit(10);
+
+  const news: NewItem[] | undefined = data?.map((item) => {
+    return {
+      id: item.id,
+      title: item.title,
+      url: item.url,
+      author: item.author,
+      upCount: item.up_count,
+      date: item.created_at,
+      digest: item.digest,
+    } as NewItem;
+  });
+
+  console.log(error);
+
+  return news || [];
+}
+
 export async function addCountById(
   id: number,
   count: number
