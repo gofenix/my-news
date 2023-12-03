@@ -23,28 +23,26 @@ import {
 import {
   FiHome,
   FiTrendingUp,
-  FiCompass,
   FiStar,
-  FiSettings,
   FiMenu,
   FiBell,
   FiChevronDown,
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
-import { NewItem } from '@/data/data';
-import { getAll } from '@/data/supabase';
-import { useState, useEffect, ComponentClass, ReactNode } from 'react';
-import NewsList from '@/components/NewsList';
-import Simple from '@/components/Simple';
+import { ReactNode } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  href: string;
 }
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
+  href: string;
+  activeLink: string;
   children: React.ReactNode;
 }
 
@@ -54,17 +52,22 @@ interface MobileProps extends FlexProps {
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
+  activeLink: string;
 }
 
 export const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
+  { name: 'Home', icon: FiHome, href: '/' },
+  { name: 'Trending', icon: FiTrendingUp, href: '/trending' },
+  //   { name: 'Explore', icon: FiCompass, href: '/explore' },
+  { name: 'Favorites', icon: FiStar, href: '/favorites' },
+  //   { name: 'Settings', icon: FiSettings, href: '/settings' },
 ];
 
-export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+export const SidebarContent = ({
+  onClose,
+  activeLink,
+  ...rest
+}: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
@@ -77,13 +80,22 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+        <Text
+          fontSize="2xl"
+          fontFamily="monospace"
+          fontWeight="bold"
+        >
           Web3 News
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem
+          key={link.name}
+          icon={link.icon}
+          href={link.href}
+          activeLink={activeLink}
+        >
           {link.name}
         </NavItem>
       ))}
@@ -91,7 +103,15 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   );
 };
 
-export const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+export const NavItem = ({
+  icon,
+  href,
+  activeLink,
+  children,
+  ...rest
+}: NavItemProps) => {
+  const router = useRouter();
+
   return (
     <Box
       as="a"
@@ -106,19 +126,23 @@ export const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         borderRadius="lg"
         role="group"
         cursor="pointer"
-        _hover={{
-          bg: 'cyan.400',
-          color: 'white',
-        }}
+        bg={activeLink === href ? 'cyan.200' : 'transparent'}
+        // _hover={{
+        //   transform: 'translateY(-2px)',
+        //   boxShadow: 'lg',
+        // }}
         {...rest}
+        onClick={() => {
+          router.push(href);
+        }}
       >
         {icon && (
           <Icon
             mr="4"
             fontSize="16"
-            _groupHover={{
-              color: 'white',
-            }}
+            // _groupHover={{
+            //   color: 'white',
+            // }}
             as={icon}
           />
         )}
@@ -212,16 +236,18 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   );
 };
 
-interface IProps {
+interface ContentProps {
   children: ReactNode;
+  activeLink: string;
 }
-export const SidebarWithHeader: React.FC<IProps> = ({ children }) => {
+export const SidebarWithHeader = ({ children, activeLink }: ContentProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
         onClose={() => onClose}
+        activeLink={activeLink}
         display={{ base: 'none', md: 'block' }}
       />
       <Drawer

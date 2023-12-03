@@ -1,22 +1,11 @@
-import {
-  Box,
-  useColorModeValue,
-  Drawer,
-  DrawerContent,
-  useDisclosure,
-} from '@chakra-ui/react';
 import { NewItem } from '@/data/data';
 import { getAll } from '@/data/supabase';
 import { useState, useEffect } from 'react';
 import NewsList from '@/components/NewsList';
 import Simple from '@/components/Simple';
-import {
-  MobileNav,
-  SidebarContent,
-  SidebarWithHeader,
-} from '@/components/Sider';
+import { SidebarWithHeader } from '@/components/Sider';
 
-const App = () => {
+const Page = () => {
   const [data, setData] = useState([] as NewItem[]);
 
   const handleUp = async () => {
@@ -38,6 +27,6 @@ const App = () => {
   );
 };
 
-export default function Home() {
-  return <SidebarWithHeader children={<App />} />;
+export default function HomePage() {
+  return <SidebarWithHeader children={<Page />} activeLink="/" />;
 }
