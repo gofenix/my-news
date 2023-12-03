@@ -6,9 +6,13 @@ import Simple from '@/components/Simple';
 import { SidebarWithHeader } from '@/components/Sider';
 
 const Page = () => {
-  return <>"favorites"</>;
+  return <>favorites</>;
 };
 
 export default function FavoritesPage() {
-  return <SidebarWithHeader children={<Page />} activeLink="/favorites" />;
+  return (
+    <SidebarWithHeader activeLink="/favorites">
+      <Page />
+    </SidebarWithHeader>
+  );
 }

@@ -28,5 +28,9 @@ const Page = () => {
 };
 
 export default function HomePage() {
-  return <SidebarWithHeader children={<Page />} activeLink="/" />;
+  return (
+    <SidebarWithHeader activeLink="/">
+      <Page />
+    </SidebarWithHeader>
+  );
 }

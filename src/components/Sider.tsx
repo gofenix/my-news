@@ -75,9 +75,9 @@ export const SidebarContent = ({
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={'white'}
       borderRight="1px"
-      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
+      borderRightColor={'gray.200'}
       w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
@@ -167,9 +167,9 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={'white'}
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
+      borderBottomColor={'gray.200'}
       justifyContent={{ base: 'space-between', md: 'flex-end' }}
       {...rest}
     >
@@ -223,10 +223,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   </Box>
                 </HStack>
               </MenuButton>
-              <MenuList
-                bg={useColorModeValue('white', 'gray.900')}
-                borderColor={useColorModeValue('gray.200', 'gray.700')}
-              >
+              <MenuList bg={'white'} borderColor={'gray.200'}>
                 <MenuItem>Profile</MenuItem>
                 <MenuDivider />
                 <MenuItem>Sign out</MenuItem>
@@ -263,7 +260,7 @@ export const SidebarWithHeader = ({ children, activeLink }: ContentProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH="100vh" bg={'gray.100'}>
       <SidebarContent
         onClose={() => onClose}
         activeLink={activeLink}

@@ -31,5 +31,9 @@ const Page = () => {
 };
 
 export default function TrendingPage() {
-  return <SidebarWithHeader children={<Page />} activeLink="/trending" />;
+  return (
+    <SidebarWithHeader activeLink="/trending">
+      <Page />
+    </SidebarWithHeader>
+  );
 }
