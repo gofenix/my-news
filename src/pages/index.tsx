@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import NewsList from '@/components/NewsList';
 import Simple from '@/components/Simple';
 import { SidebarWithHeader } from '@/components/Sider';
+import { Box } from '@chakra-ui/react';
 
 const Page = () => {
   const [data, setData] = useState([] as NewItem[]);
@@ -20,10 +21,10 @@ const Page = () => {
   }, []);
 
   return (
-    <>
+    <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
       <Simple handleUp={handleUp}></Simple>
       <NewsList data={data} handleUp={handleUp} />
-    </>
+    </Box>
   );
 };
 

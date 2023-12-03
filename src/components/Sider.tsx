@@ -75,7 +75,6 @@ export const SidebarContent = ({
   return (
     <Box
       transition="3s ease"
-      bg={'white'}
       borderRight="1px"
       borderRightColor={'gray.200'}
       w={{ base: 'full', md: 60 }}
@@ -167,7 +166,6 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={'white'}
       borderBottomWidth="1px"
       borderBottomColor={'gray.200'}
       justifyContent={{ base: 'space-between', md: 'flex-end' }}
@@ -223,7 +221,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                   </Box>
                 </HStack>
               </MenuButton>
-              <MenuList bg={'white'} borderColor={'gray.200'}>
+              <MenuList borderColor={'gray.200'}>
                 <MenuItem>Profile</MenuItem>
                 <MenuDivider />
                 <MenuItem>Sign out</MenuItem>
