@@ -1,13 +1,22 @@
-import { Box, Button, Flex } from '@chakra-ui/react';
-import Simple from '@/components/Simple';
-import Nav from '@/components/Nav';
-import { useEffect, useState } from 'react';
-import { NewItem, UpdData } from '@/data/data';
-import { getAll, updateById } from '@/data/supabase';
+import {
+  Box,
+  useColorModeValue,
+  Drawer,
+  DrawerContent,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { NewItem } from '@/data/data';
+import { getAll } from '@/data/supabase';
+import { useState, useEffect } from 'react';
 import NewsList from '@/components/NewsList';
-import { genDigest, getContent } from '@/data/ai';
+import Simple from '@/components/Simple';
+import {
+  MobileNav,
+  SidebarContent,
+  SidebarWithHeader,
+} from '@/components/Sider';
 
-export default function Home() {
+const App = () => {
   const [data, setData] = useState([] as NewItem[]);
 
   const handleUp = async () => {
@@ -22,15 +31,13 @@ export default function Home() {
   }, []);
 
   return (
-    <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
-      <Nav></Nav>
-      <Box m={'6'}></Box>
-      <Flex justifyContent={'center'}>
-        <Box w={'60%'}>
-          <Simple handleUp={handleUp}></Simple>
-          <NewsList data={data} handleUp={handleUp} />
-        </Box>
-      </Flex>
-    </Box>
+    <>
+      <Simple handleUp={handleUp}></Simple>
+      <NewsList data={data} handleUp={handleUp} />
+    </>
   );
+};
+
+export default function Home() {
+  return <SidebarWithHeader children={<App />} />;
 }
