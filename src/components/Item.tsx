@@ -13,7 +13,7 @@ import {
 import { useState } from 'react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { NewItem, UpdData } from '@/data/data';
-import { addCountById } from '@/data/supabase';
+import { addCountById, addFavorite, getUser } from '@/data/supabase';
 import dayjs from 'dayjs';
 import EditModal from './EditModal';
 
@@ -49,6 +49,11 @@ export default function Item(props: NewItemProps) {
           onClick={async () => {
             setLoading(true);
             const addCount = (item.upCount || 0) + 1;
+
+            const user = await getUser();
+            console.log('------------>', user);
+            user?.user_metadata?.user_name;
+            await addFavorite(item?.id || 0, user?.user_metadata?.user_name);
             await addCountById(item.id || 0, addCount);
             await handleUp();
             setLoading(false);

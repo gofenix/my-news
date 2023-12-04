@@ -21,7 +21,7 @@ const Page = () => {
   }, []);
 
   return (
-    <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
+    <Box>
       <Simple handleUp={handleUp}></Simple>
       <NewsList data={data} handleUp={handleUp} />
     </Box>

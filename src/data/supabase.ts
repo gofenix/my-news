@@ -79,6 +79,12 @@ export async function addCountById(
   return item as NewItem;
 }
 
+export async function addFavorite(news_id: number, user_name: string) {
+  let { data } = await supabase
+    .from('favorites')
+    .insert({ user_name, news_id });
+}
+
 export async function addItem(item: NewItem): Promise<NewItem> {
   const { data } = await supabase
     .from('news')

@@ -7,11 +7,7 @@ import { SidebarWithHeader } from '@/components/Sider';
 import { Box } from '@chakra-ui/react';
 
 const Page = () => {
-  return (
-    <Box bgImage={'bg.svg'} bgRepeat={'no-repeat'} bgSize={'auto'}>
-      favorites
-    </Box>
-  );
+  return <Box>favorites</Box>;
 };
 
 export default function FavoritesPage() {

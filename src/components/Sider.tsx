@@ -258,27 +258,22 @@ export const SidebarWithHeader = ({ children, activeLink }: ContentProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={'gray.100'}>
+    <Box minH="100vh">
       <SidebarContent
         onClose={() => onClose}
         activeLink={activeLink}
         display={{ base: 'none', md: 'block' }}
       />
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size="full"
-      >
-        <DrawerContent>
-          <SidebarContent onClose={onClose} activeLink={activeLink} />
-        </DrawerContent>
-      </Drawer>
-      {/* mobilenav */}
+
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
+
+      <Box
+        ml={{ base: 0, md: 60 }}
+        p={'4'}
+        bgImage={'bg.svg'}
+        bgRepeat={'no-repeat'}
+        bgSize={'auto'}
+      >
         {children}
       </Box>
     </Box>
