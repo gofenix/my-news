@@ -2,7 +2,7 @@ import { User, createClient } from '@supabase/supabase-js';
 import { NewItem, UpdData } from '@/data/data';
 
 const supabaseUrl = 'https://picwqygjdjkgpkoivdxn.supabase.co';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpY3dxeWdqZGprZ3Brb2l2ZHhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjY1ODc2NTcsImV4cCI6MTk4MjE2MzY1N30.LlVa9L-n1b7PSVszZRzH8W5_SIaQb6qI5Xy7e16NN6g";
 const supabase = createClient(supabaseUrl, supabaseKey || '');
 
 export async function getAll(): Promise<NewItem[]> {
