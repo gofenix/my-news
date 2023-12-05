@@ -36,4 +36,4 @@ jobs:
         with:
           project: "afraid-heron-63"
           entrypoint: "https://deno.land/std@0.188.0/http/file_server.ts" # 📝 Update the entrypoint if necessary
-          root: "out" # 📝 Update the root if necessary
+          root: ".next" # 📝 Update the root if necessary
