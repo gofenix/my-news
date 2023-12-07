@@ -36,6 +36,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { getUser, signInWithGitHub } from '@/data/supabase';
 import { User } from '@supabase/supabase-js';
+import { ConnectWallet } from '@thirdweb-dev/react';
 
 interface LinkItemProps {
   name: string;
@@ -195,7 +196,9 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           aria-label="open menu"
           icon={<FiBell />}
         />
-        <Flex alignItems={'center'}>
+        <ConnectWallet btnTitle="Login" />
+
+        {/* <Flex alignItems={'center'}>
           {user && user.user_metadata && user.user_metadata.avatar_url ? (
             <Menu>
               <MenuButton
@@ -244,7 +247,7 @@ export const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <FiUser />
             </Button>
           )}
-        </Flex>
+        </Flex> */}
       </HStack>
     </Flex>
   );

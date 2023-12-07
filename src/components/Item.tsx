@@ -16,6 +16,7 @@ import { NewItem, UpdData } from '@/data/data';
 import { addCountById, addFavorite, getUser } from '@/data/supabase';
 import dayjs from 'dayjs';
 import EditModal from './EditModal';
+import { useAddress } from '@thirdweb-dev/react';
 
 type NewItemProps = {
   item: NewItem;
@@ -32,6 +33,7 @@ export default function Item(props: NewItemProps) {
   );
   const [updData, setUpdData] = useState({} as UpdData);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const address = useAddress();
 
   return (
     <Box>
@@ -49,8 +51,11 @@ export default function Item(props: NewItemProps) {
           onClick={async () => {
             setLoading(true);
             const addCount = (item.upCount || 0) + 1;
-            const user = await getUser();
-            await addFavorite(item?.id || 0, user?.user_metadata?.user_name);
+            if (!address) {
+              alert('please connect wallet');
+            }
+
+            await addFavorite(item.id || 0, address!);
             await addCountById(item.id || 0, addCount);
             await handleUp();
             setLoading(false);

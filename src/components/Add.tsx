@@ -18,6 +18,7 @@ import axios from 'axios';
 import { addItem, getUser, signInWithGitHub } from '@/data/supabase';
 import EditModal from './EditModal';
 import { User } from '@supabase/supabase-js';
+import { useAddress } from '@thirdweb-dev/react';
 
 async function getTitle(url: string): Promise<string | undefined> {
   try {
@@ -48,13 +49,7 @@ export default function Add(props: SimpleProps) {
     await onClose();
     setState('initial');
   };
-  const [user, setUser] = useState({} as User);
-
-  useEffect(() => {
-    getUser().then((value) => {
-      setUser(value);
-    });
-  }, []);
+  const address = useAddress();
 
   return (
     <Box px={20}>
@@ -84,14 +79,14 @@ export default function Add(props: SimpleProps) {
           onSubmit={async (e: FormEvent) => {
             e.preventDefault();
             setState('submitting');
-            if (user && user.user_metadata && user.user_metadata.avatar_url) {
+            if (address) {
               const title = await getTitle(url);
 
               if (title == undefined) {
                 const item = {
                   title: '',
                   url: url,
-                  author: user.user_metadata.name,
+                  author: address!,
                 } as NewItem;
                 setItem(item);
                 await onOpen();
@@ -99,7 +94,7 @@ export default function Add(props: SimpleProps) {
                 const item = {
                   title: title,
                   url: url,
-                  author: user.user_metadata.name,
+                  author: address!,
                   upCount: 0,
                 } as NewItem;
 
@@ -109,7 +104,7 @@ export default function Add(props: SimpleProps) {
                 setState('initial');
               }
             } else {
-              signInWithGitHub();
+              alert('please connect wallet');
             }
           }}
         >

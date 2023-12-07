@@ -5,9 +5,12 @@ import NewsList from '@/components/NewsList';
 import Add from '@/components/Add';
 import { SidebarWithHeader } from '@/components/Sider';
 import { Box } from '@chakra-ui/react';
+import { useAddress, useLogin } from '@thirdweb-dev/react';
 
 const Page = () => {
   const [data, setData] = useState([] as NewItem[]);
+
+  const address = useAddress();
 
   const handleUp = async () => {
     const all = await getAll();
