@@ -49,10 +49,7 @@ export default function Item(props: NewItemProps) {
           onClick={async () => {
             setLoading(true);
             const addCount = (item.upCount || 0) + 1;
-
             const user = await getUser();
-            console.log('------------>', user);
-            user?.user_metadata?.user_name;
             await addFavorite(item?.id || 0, user?.user_metadata?.user_name);
             await addCountById(item.id || 0, addCount);
             await handleUp();
@@ -73,13 +70,8 @@ export default function Item(props: NewItemProps) {
         <Box m="2"></Box>
         <Flex direction={'column'}>
           <Link href={item.url} isExternal>
-            <Flex align={'baseline'} direction={'row'}>
-              <Text
-                fontSize="md"
-                as={'b'}
-                isTruncated={true}
-                maxWidth={window.innerWidth * 0.25}
-              >
+            <Flex align={'baseline'} direction={'column'}>
+              <Text fontSize="md" as={'b'} isTruncated={true}>
                 {item.title}
               </Text>
               <Text
@@ -129,11 +121,7 @@ export default function Item(props: NewItemProps) {
             )}
           </Stack>
           <Collapse in={digestOpen} animateOpacity>
-            <Stack
-              direction={'row'}
-              align={'baseline'}
-              maxWidth={window.innerWidth * 0.55}
-            >
+            <Stack direction={'row'} align={'baseline'}>
               <Text fontSize={'sm'}>{item.digest}</Text>
             </Stack>
           </Collapse>

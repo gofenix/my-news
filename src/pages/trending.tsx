@@ -15,7 +15,7 @@ const Page = () => {
   }, []);
 
   return (
-    <Box>
+    <Box px="20" pt={10}>
       {data.map((x, index) => {
         return (
           <Fade in key={index}>

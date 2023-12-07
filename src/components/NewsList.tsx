@@ -11,7 +11,7 @@ export default function NewsList(props: NewsListProps) {
   const { data, handleUp } = props;
 
   return (
-    <Box m="10">
+    <Box px="20" pt={10}>
       {data.map((x, index) => {
         return (
           <Fade in key={index}>

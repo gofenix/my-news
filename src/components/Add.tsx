@@ -14,7 +14,6 @@ import {
 } from '@chakra-ui/react';
 import { CalendarIcon, CheckIcon } from '@chakra-ui/icons';
 import { NewItem } from '@/data/data';
-import delay from 'delay';
 import axios from 'axios';
 import { addItem, getUser, signInWithGitHub } from '@/data/supabase';
 import EditModal from './EditModal';
@@ -36,7 +35,7 @@ type SimpleProps = {
   handleUp: () => void;
 };
 
-export default function Simple(props: SimpleProps) {
+export default function Add(props: SimpleProps) {
   const [url, setUrl] = useState('');
   const [item, setItem] = useState({} as NewItem);
   const [state, setState] = useState<'initial' | 'submitting' | 'success'>(
@@ -58,7 +57,7 @@ export default function Simple(props: SimpleProps) {
   }, []);
 
   return (
-    <Box>
+    <Box px={20}>
       <Flex direction={'row'} justifyContent={'space-between'}>
         <Flex direction={'column'}>
           <Wrap>
