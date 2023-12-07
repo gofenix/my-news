@@ -60,7 +60,36 @@ export async function getFavorites(user_name: string): Promise<NewItem[]> {
     .select('*')
     .eq('user_name', user_name);
 
-  return [] as NewItem[];
+  const uniqIDs = new Set(data?.map((value, index) => value.news_id))
+  console.log(uniqIDs)
+
+  const items = await getByIDs(Array.from(uniqIDs))
+
+  return items;
+}
+
+export async function getByIDs(ids: string[]) : Promise<NewItem[]> {
+  let { data, error } = await supabase
+    .from('news')
+    .select('*')
+    .in("id", ids)
+    .order('id', { ascending: false });
+
+  const news: NewItem[] | undefined = data?.map((item) => {
+    return {
+      id: item.id,
+      title: item.title,
+      url: item.url,
+      author: item.author,
+      upCount: item.up_count,
+      date: item.created_at,
+      digest: item.digest,
+    } as NewItem;
+  });
+
+  console.log(error);
+
+  return news || [];
 }
 
 export async function addCountById(

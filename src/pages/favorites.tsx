@@ -1,17 +1,19 @@
 import { NewItem } from '@/data/data';
-import { getAll, getTrending } from '@/data/supabase';
+import { getAll, getFavorites, getTrending } from '@/data/supabase';
 import { useState, useEffect } from 'react';
 import NewsList from '@/components/NewsList';
 import Simple from '@/components/Add';
 import { SidebarWithHeader } from '@/components/Sider';
 import { Box, Divider, Fade } from '@chakra-ui/react';
 import Item from '@/components/Item';
+import { useAddress } from '@thirdweb-dev/react';
 
 const Page = () => {
   const [data, setData] = useState([] as NewItem[]);
+  const address = useAddress()
 
   useEffect(() => {
-    getTrending().then((res) => {
+    getFavorites(address!).then((res) => {
       setData(res);
     });
   }, []);
